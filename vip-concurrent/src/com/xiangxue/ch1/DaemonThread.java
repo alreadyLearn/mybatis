@@ -1,0 +1,40 @@
+package com.xiangxue.ch1;
+
+import java.util.concurrent.ExecutionException;
+
+/**
+ * @author 
+ *
+ *  类说明：守护线程的使用和守护线程中的finally语句块
+ */
+public class DaemonThread {
+	
+	private static class UseThread extends Thread {
+		@Override
+		public void run() {
+			try {
+				int i = 1;
+				while (!isInterrupted()) {
+					System.out.println(Thread.currentThread().getName()
+							+ " I am extends Thread.:"+i);
+				}
+				System.out.println(Thread.currentThread().getName() 
+						+ " interrupt flag is " + isInterrupted());
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				System.out.println("...........finally");
+			}
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException, 
+		ExecutionException {
+		UseThread useThread = new UseThread();
+		useThread.setDaemon(true);
+		useThread.start();
+		Thread.sleep(5);
+//		useThread.interrupt();
+	}
+}
